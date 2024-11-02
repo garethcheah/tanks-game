@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Bullet : NetworkBehaviour
 {
+    //public ulong clientId; ???
     public float speed = 30.0f;
     public float lifeTime = 5.0f;
 
@@ -31,6 +32,17 @@ public class Bullet : NetworkBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        if (IsServer)
+        {
+            PlayerDamage other = collision.gameObject.GetComponent<PlayerDamage>();
+
+            if (other != null) // && collisionObjectClientId != other.OwnerClientId)
+            {
+                other.OnDamage();
+                //Debug.Log(collisionObjectClientId + " " + other.OwnerClientId);
+            }
+        }
+
         // Handle what happens when the bullet hits something (e.g., damage, explosion)
         DestroyBullet();  // Destroy bullet on impact
     }

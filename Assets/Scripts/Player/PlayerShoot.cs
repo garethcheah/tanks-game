@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class PlayerShoot : NetworkBehaviour
 {
-    public GameObject bulletPrefab;   // Assign your bullet prefab here
-    public Transform firePoint;       // The point from which the bullet will be fired
-    public float fireForce = 30.0f;     // Speed of the fired bullet
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public float fireForce = 30.0f;
 
     private Rigidbody _rb;
 
@@ -13,26 +13,39 @@ public class PlayerShoot : NetworkBehaviour
     {
         base.OnNetworkSpawn();
 
-        // Get the Rigidbody component
         _rb = GetComponent<Rigidbody>();
+    }
+
+    [ServerRpc]
+    public void OnFireServerRpc(ServerRpcParams serverRpcParams = default)
+    {
+        OnFire(serverRpcParams.Receive.SenderClientId);
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1") && IsOwner)
+        if (Input.GetButtonDown("Fire1"))
         {
-            FireServerRpc(firePoint.position, firePoint.rotation);
+            if (IsServer && IsLocalPlayer)
+            {
+                OnFire(OwnerClientId);
+            }
+            else if (IsClient && IsLocalPlayer)
+            {
+                OnFireServerRpc();
+            }
         }
     }
 
-    [ServerRpc]
-    void FireServerRpc(Vector3 position, Quaternion rotation)
+    private void OnFire(ulong clientId)
     {
         // Instantiate bullet at the specified position and rotation
-        GameObject bullet = Instantiate(bulletPrefab, position, rotation);
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
         // Spawn the bullet across the network
         bullet.GetComponent<NetworkObject>().Spawn();
+
+        // Grab client ID for bullet
 
         // Get the Rigidbody of the bullet
         //Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();

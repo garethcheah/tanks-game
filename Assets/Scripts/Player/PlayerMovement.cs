@@ -7,6 +7,8 @@ public class PlayerMovement : NetworkBehaviour
     public float turnSpeed = 50.0f;   // Rotation speed
 
     private Rigidbody _rb;
+    private float _horizontal;
+    private float _vertical;
 
     public override void OnNetworkSpawn()
     {
@@ -16,22 +18,39 @@ public class PlayerMovement : NetworkBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
+    [ServerRpc]
+    public void OnMoveServerRpc(float horizontal, float vertical)
+    {
+        _horizontal = horizontal;
+        _vertical = vertical;
+    }
+
     private void Update()
     {
-        if (IsOwner)
+        if (!IsOwner) return;
+
+        if (IsServer && IsLocalPlayer)
         {
-            OnMove();
-            OnRotate();
+            _horizontal = Input.GetAxis("Horizontal");
+            _vertical = Input.GetAxis("Vertical");
         }
+        else if (IsClient && IsLocalPlayer)
+        {
+            //Client request to the server to move their player game object
+            OnMoveServerRpc(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        OnMove();
+        OnRotate();
     }
 
     private void OnMove()
     {
-        // Get the input for movement (W/S or Up/Down)
-        float moveInput = Input.GetAxis("Vertical");
-
         // Calculate the movement vector (forward or backward)
-        Vector3 move = transform.forward * moveInput * moveSpeed * Time.deltaTime;
+        Vector3 move = transform.forward * _vertical * moveSpeed * Time.deltaTime;
 
         // Apply the movement to the Rigidbody (with MovePosition to handle physics)
         _rb.MovePosition(_rb.position + move);
@@ -39,13 +58,10 @@ public class PlayerMovement : NetworkBehaviour
 
     private void OnRotate()
     {
-        // Get the input for rotation (A/D or Left/Right)
-        float turnInput = Input.GetAxis("Horizontal");
-
         // Calculate the rotation (around the Y-axis)
-        float turn = turnInput * turnSpeed * Time.deltaTime;
+        Quaternion rotation = Quaternion.Euler(0.0f, _horizontal * turnSpeed * Time.deltaTime, 0.0f);
 
         // Apply the rotation
-        _rb.MoveRotation(_rb.rotation * Quaternion.Euler(0f, turn, 0f));
+        _rb.MoveRotation(_rb.rotation * rotation);
     }
 }

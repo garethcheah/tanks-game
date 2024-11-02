@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 4915709594782444780}
   - component: {fileID: 7242211045155350486}
   - component: {fileID: 127457934609220328}
+  - component: {fileID: 2944955228189033536}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -154,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkTransformExpanded: 0
-  AuthorityMode: 1
+  AuthorityMode: 0
   TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1
@@ -207,6 +208,19 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8356697507982392753, guid: 86ec1dd25156f4f46b6829e6de21434f, type: 3}
   firePoint: {fileID: 6455806168969400821}
   fireForce: 50
+--- !u!114 &2944955228189033536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2708175284520391657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c6ee54b950586642a723e676b4606a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &7705473852544140771
 GameObject:
   m_ObjectHideFlags: 0
