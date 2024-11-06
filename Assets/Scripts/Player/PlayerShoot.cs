@@ -46,6 +46,7 @@ public class PlayerShoot : NetworkBehaviour
         bullet.GetComponent<NetworkObject>().Spawn();
 
         // Grab client ID for bullet
+        bullet.GetComponent<Bullet>().clientId = clientId;
 
         // Get the Rigidbody of the bullet
         //Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();

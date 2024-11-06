@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Bullet : NetworkBehaviour
 {
-    //public ulong clientId; ???
+    public ulong clientId;
     public float speed = 30.0f;
     public float lifeTime = 5.0f;
 
@@ -39,7 +39,7 @@ public class Bullet : NetworkBehaviour
             if (other != null) // && collisionObjectClientId != other.OwnerClientId)
             {
                 other.OnDamage();
-                //Debug.Log(collisionObjectClientId + " " + other.OwnerClientId);
+                Debug.Log("Bullet from " + clientId + "has hit " + other.OwnerClientId);
             }
         }
 
