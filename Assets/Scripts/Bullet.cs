@@ -40,6 +40,9 @@ public class Bullet : NetworkBehaviour
             {
                 other.OnDamage();
                 Debug.Log("Bullet from " + clientId + "has hit " + other.OwnerClientId);
+
+                // Update score
+                GameManager.instance.AddScore(clientId);
             }
         }
 

@@ -68,7 +68,7 @@ public class GameManager : NetworkBehaviour
         {
             _playerScores[playerId]++;
             ShowScoreUI();
-            // Check winner
+            CheckWinner(playerId);
         }
     }
 
@@ -92,6 +92,49 @@ public class GameManager : NetworkBehaviour
         UpdateScoreClientRpc(JsonUtility.ToJson(_scores));
     }
 
+    public void StartGame()
+    {
+        state.Value = 1;
+        ShowScoreUI();
+    }
+
+    public void ResetPlayerPosition(NetworkObject playerObject, ulong playerId)
+    {
+        playerObject.transform.position = _startPositions[(int)playerId].position;
+    }
+
+    public void CheckWinner(ulong playerId)
+    {
+        if (_playerScores[playerId] >= 10)
+        {
+            EndGame(playerId);
+        }
+    }
+
+    public void EndGame(ulong winnerId)
+    {
+        if (IsServer)
+        {
+            _endGameScreen.SetActive(true);
+
+            if (winnerId == NetworkManager.LocalClientId)
+            {
+                _endGameText.text = "You win!";
+            }
+            else
+            {
+                _endGameText.text = $"You lose!\nThe winner is {_playerNames[winnerId]}";
+            }
+        }
+
+        ScoreInfo tempScoreInfo = new ScoreInfo();
+        tempScoreInfo.score = _playerScores[winnerId];
+        tempScoreInfo.id = winnerId;
+        tempScoreInfo.name = _playerNames[winnerId];
+
+        ShowGameEndUIClientRPC(JsonUtility.ToJson(tempScoreInfo));
+    }
+
     [ClientRpc]
     public void UpdateScoreClientRpc(string playerScores)
     {
@@ -104,10 +147,20 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    public void StartGame()
+    [ClientRpc]
+    public void ShowGameEndUIClientRPC(string winnerInfo)
     {
-        state.Value = 1;
-        ShowScoreUI();
+        _endGameScreen.SetActive(true);
+        ScoreInfo scoreInfo = JsonUtility.FromJson<ScoreInfo>(winnerInfo);
+
+        if (scoreInfo.id == NetworkManager.LocalClientId)
+        {
+            _endGameText.text = "You win!";
+        }
+        else
+        {
+            _endGameText.text = $"You lose!\nThe winner is {scoreInfo.name}";
+        }
     }
 
     private void Awake()
