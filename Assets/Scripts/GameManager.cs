@@ -20,6 +20,7 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private GameObject _endGameScreen;
     [SerializeField] private TMP_Text _endGameText;
     [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private TMP_Dropdown _playerColorInput;
 
     private NetworkObject _localPlayer;
     private Dictionary<ulong, string> _playerNames = new Dictionary<ulong, string>();
@@ -59,6 +60,16 @@ public class GameManager : NetworkBehaviour
         else
         {
             _playerNames.Add(playerObject.OwnerClientId, playerName);
+        }
+    }
+
+    public void SetActivePlayerColorDropdown(PlayerAppearance activePlayer)
+    {
+        if (activePlayer != null && activePlayer.IsOwner)
+        {
+            _playerColorInput.onValueChanged.RemoveAllListeners();
+            _playerColorInput.onValueChanged.AddListener(activePlayer.OnColorDropdownValueChanged);
+            _playerColorInput.value = activePlayer.playerColor.Value;
         }
     }
 

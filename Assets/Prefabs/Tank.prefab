@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 127457934609220328}
   - component: {fileID: 2944955228189033536}
   - component: {fileID: 2418123747628395712}
+  - component: {fileID: 2861801040157714882}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -305,6 +306,94 @@ MonoBehaviour:
         byte0060: 0
         byte0061: 0
   _txtPlayerName: {fileID: 6069422183682774076}
+--- !u!114 &2861801040157714882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2708175284520391657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5936829ba614a994eb2758c561025bbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  tankRenderer: {fileID: 5001619543166713807}
+  tankMaterials:
+  - {fileID: 2100000, guid: 4114d9d796c4c374183d511de20d0b23, type: 2}
+  - {fileID: 2100000, guid: b2d7e969a27d04f47a486667bb89ba2f, type: 2}
+  - {fileID: 2100000, guid: ac521c219ecc13941ad33f0bf93e228e, type: 2}
+  - {fileID: 2100000, guid: 6583e79f1a7b60f4a852e03c8d43b38e, type: 2}
+  tankColor:
+    m_InternalValue:
+      utf8LengthInBytes: 11
+      bytes:
+        offset0000:
+          byte0000: 80
+          byte0001: 108
+          byte0002: 97
+          byte0003: 121
+          byte0004: 101
+          byte0005: 114
+          byte0006: 32
+          byte0007: 78
+          byte0008: 97
+          byte0009: 109
+          byte0010: 101
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0016:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0032:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        byte0048: 0
+        byte0049: 0
+        byte0050: 0
+        byte0051: 0
+        byte0052: 0
+        byte0053: 0
+        byte0054: 0
+        byte0055: 0
+        byte0056: 0
+        byte0057: 0
+        byte0058: 0
+        byte0059: 0
+        byte0060: 0
+        byte0061: 0
 --- !u!1 &7705473852544140771
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,6 +679,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 7caa6d31b543f4d42b791ac6d84c52dd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 4114d9d796c4c374183d511de20d0b23, type: 2}
     - target: {fileID: 919132149155446097, guid: 7caa6d31b543f4d42b791ac6d84c52dd, type: 3}
       propertyPath: m_Name
       value: chibitank1
@@ -602,6 +695,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 201419330076440589}
   m_SourcePrefab: {fileID: 100100000, guid: 7caa6d31b543f4d42b791ac6d84c52dd, type: 3}
+--- !u!23 &5001619543166713807 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 7caa6d31b543f4d42b791ac6d84c52dd, type: 3}
+  m_PrefabInstance: {fileID: 5956230239313519435}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6134604890103973024 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7caa6d31b543f4d42b791ac6d84c52dd, type: 3}

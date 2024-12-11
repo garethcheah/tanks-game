@@ -18,6 +18,7 @@ public class GameNetworkManager : MonoBehaviour
     [Header("Connection UI")]
     [SerializeField] private GameObject _pnlJoinGame;
     [SerializeField] private GameObject _pnlChat;
+    [SerializeField] private GameObject _pnlColorChange;
     [SerializeField] private TMP_Text _txtStatus;
     [SerializeField] private TMP_Text _txtPlayerId;
     [SerializeField] private TMP_InputField _txtJoinCode;
@@ -72,7 +73,7 @@ public class GameNetworkManager : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.Log($"Relay allocation request failed.");
+            Debug.Log($"Relay allocation request failed. - {ex.ToString()}");
             throw;
         }
 
@@ -124,7 +125,7 @@ public class GameNetworkManager : MonoBehaviour
         }
         catch(Exception ex)
         {
-
+            Debug.LogError($"Error occurred while authenticating player. - {ex.ToString()}");
         }
     }
 
@@ -156,6 +157,7 @@ public class GameNetworkManager : MonoBehaviour
         _txtPlayerId.text = $"Player ID: {_playerId} (HOST) Join Code: {_joinCode}";
         _pnlJoinGame.SetActive(false);
         _pnlChat.SetActive(true);
+        _pnlColorChange.SetActive(true);
     }
 
     IEnumerator ConfigureUseCodeJoinClient(string joinCode)
@@ -182,5 +184,6 @@ public class GameNetworkManager : MonoBehaviour
         _txtStatus.text = "Joined as client.";
         _pnlJoinGame.SetActive(false);
         _pnlChat.SetActive(true);
+        _pnlColorChange.SetActive(true);
     }
 }
